@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI FILM ACADEMY｜ご購入手続き</title>
+  <style>
+    :root {
+      --primary:  #0A0A0A;
+      --accent:   #C8A96E;
+      --teal:     #1A3F6B;
+      --green:    #1A6B4A;
+      --text:     #1A1A1A;
+      --sub:      #555;
+      --light:    #888;
+      --border:   #E0E0E0;
+      --bg:       #F7F7F5;
+      --card:     #FFFFFF;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif; font-size: 14px; line-height: 1.75; color: var(--text); background: var(--bg); }
+    a { color: var(--sub); text-decoration: none; }
+
+    /* ヘッダー */
+    .site-header { background: var(--primary); padding: 16px 32px; }
+    .logo-main { font-size: 20px; font-weight: 800; letter-spacing: .18em; color: #fff; display: block; }
+    .logo-sub  { font-size: 10px; letter-spacing: .12em; color: var(--accent); margin-top: 2px; display: block; }
+
+    /* レイアウト */
+    .page-wrapper { max-width: 860px; margin: 0 auto; padding: 40px 16px 60px; }
+    .page-layout { display: grid; grid-template-columns: 1fr 300px; gap: 28px; align-items: start; }
+
+    /* 見出し */
+    .section-heading { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .section-lead { font-size: 13px; color: var(--sub); margin-bottom: 24px; }
+
+    /* カード */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 24px; }
+    .card__title { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--light); text-transform: uppercase; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+
+    /* 注文商品 */
+    .product-header { display: flex; gap: 16px; align-items: center; margin-bottom: 14px; }
+    .product-logo { width: 56px; height: 56px; background: var(--primary); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1.2; }
+    .product-logo span:first-child { font-size: 7px; font-weight: 800; letter-spacing: .08em; color: #fff; }
+    .product-logo span:last-child  { font-size: 5px; color: var(--accent); }
+    .product-name { font-size: 16px; font-weight: 700; }
+    .product-sub  { font-size: 12px; color: var(--sub); margin-top: 2px; }
+    .price-row { background: #F9F9F7; border: 1px solid var(--border); border-radius: 4px; padding: 12px 16px; font-size: 13px; color: var(--sub); }
+    .price-row strong { font-size: 20px; font-weight: 700; color: var(--text); }
+
+    /* コンテンツリスト */
+    .content-list { list-style: none; }
+    .content-item { display: flex; gap: 14px; padding: 18px 0; border-bottom: 1px solid #F0F0EE; }
+    .content-item:last-child { border-bottom: none; }
+    .item-num { width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .item-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+    .item-desc  { font-size: 12px; color: var(--sub); margin-bottom: 10px; }
+
+    /* タグ */
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag { background: #F0F0EE; border-radius: 3px; padding: 2px 8px; font-size: 11px; color: var(--sub); }
+
+    /* アコーディオン */
+    .accordion { margin-top: 10px; }
+    .acc-btn {
+      width: 100%; background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 9px 14px; text-align: left; font-size: 12px; font-weight: 700;
+      color: var(--text); cursor: pointer; display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 4px; transition: background .15s;
+    }
+    .acc-btn:hover { background: #F5F5F3; }
+    .acc-btn .arr { font-size: 10px; color: var(--light); transition: transform .2s; }
+    .acc-btn.open .arr { transform: rotate(180deg); }
+    .acc-body { display: none; padding: 10px 4px 6px; }
+    .acc-body.open { display: block; }
+
+    /* サブSTEP */
+    .sub-step { margin-bottom: 12px; padding-left: 10px; border-left: 2px solid var(--border); }
+    .sub-title { font-weight: 700; font-size: 12px; margin-bottom: 6px; }
+
+    /* サービス期間 */
+    .duration { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-weight: 700; font-size: 13px; display: flex; justify-content: space-between; }
+
+    /* 支払方法 */
+    .brands { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .brand  { border: 1px solid var(--border); border-radius: 4px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: var(--sub); }
+    .method-label { font-size: 12px; font-weight: 700; color: var(--sub); display: flex; align-items: center; gap: 5px; margin-bottom: 8px; }
+    .method-label::before { content: '▶'; font-size: 9px; }
+    .method-label + .method-label { margin-top: 10px; }
+
+    /* セキュリティ */
+    .security-text { font-size: 12px; color: var(--sub); line-height: 1.9; }
+    .ssl-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; border: 1px solid var(--border); border-radius: 4px; padding: 7px 12px; font-size: 11px; }
+    .ssl-badge .check { color: #FFD700; font-size: 16px; }
+
+    /* サイドバー */
+    .sidebar { position: sticky; top: 24px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .sidebar-head { background: var(--primary); padding: 14px 18px; color: #fff; font-size: 13px; font-weight: 700; }
+    .sidebar-body { padding: 18px; }
+    .sum-row { display: flex; justify-content: space-between; font-size: 13px; padding: 7px 0; border-bottom: 1px solid #F0F0EE; color: var(--sub); }
+    .sum-row:last-of-type { border-bottom: none; }
+    .sum-row span:last-child { font-weight: 600; color: var(--text); }
+    .total-box { background: #F9F9F7; border-radius: 4px; padding: 12px 14px; margin: 14px 0; display: flex; justify-content: space-between; align-items: center; }
+    .total-label { font-size: 11px; color: var(--sub); }
+    .total-amount { font-size: 22px; font-weight: 700; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 4px 0 14px; }
+    .method-head { font-size: 12px; font-weight: 700; color: var(--sub); text-align: center; margin-bottom: 12px; }
+
+    /* ボタン */
+    .btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 13px 16px; border: none; border-radius: 5px; font-size: 13px; font-weight: 700; cursor: pointer; color: #fff; transition: opacity .2s, transform .1s; margin-bottom: 8px; text-decoration: none; }
+    .btn:hover  { opacity: .88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-arrow { background: rgba(255,255,255,.22); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .btn--credit { background: var(--teal); }
+    .btn--bank   { background: var(--green); }
+    .btn-or { text-align: center; font-size: 12px; color: var(--light); margin: 2px 0 8px; }
+    .sidebar-note { font-size: 11px; color: var(--light); line-height: 1.8; margin-top: 12px; text-align: center; }
+
+    /* フッター */
+    .site-footer { text-align: center; padding: 24px 16px; font-size: 12px; color: var(--light); border-top: 1px solid var(--border); background: #fff; }
+    .site-footer a { margin: 0 8px; }
+
+    /* SP */
+    @media (max-width: 680px) {
+      .page-layout { grid-template-columns: 1fr; }
+      .sidebar { order: -1; position: static; }
+      .section-heading { font-size: 17px; }
+      .total-amount { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="logo-main">AI FILM ACADEMY</span>
+  <span class="logo-sub">AI動画制作スクール</span>
+</header>
+
+<div class="page-wrapper">
+  <div class="page-layout">
+
+    <main>
+      <h1 class="section-heading">ご購入手続きに進む</h1>
+      <p class="section-lead">注文する商品をご確認いただき、ご希望の決済方法のボタンを押して次にお進みください。</p>
+
+      <div class="card">
+        <div class="card__title">注文する商品</div>
+        <div class="product-header">
+          <div class="product-logo"><span>AI FILM</span><span>ACADEMY</span></div>
+          <div>
+            <div class="product-name">AI FILM ACADEMY</div>
+            <div class="product-sub">AI動画制作スクール（オンライン講座）</div>
+          </div>
+        </div>
+        <div class="price-row">受講料　<strong>450,000円</strong>　（税別）</div>
+      </div>
+
+      <div class="card">
+        <div class="card__title">本商品に含まれる内容</div>
+        <ul class="content-list">
+
+          <li class="content-item">
+            <div class="item-num">1</div>
+            <div>
+              <div class="item-title">＜1ヶ月目：講義編＞ 基礎講義（全10時間）</div>
+              <div class="item-desc">AI・LLM・Diffusionの仕組みからプロンプト設計、ComfyUI導入まで動画制作の理論的土台を構築します。</div>
+              <div class="tags">
+                <span class="tag">AIの今</span><span class="tag">AIとは？</span><span class="tag">LLMとは？</span>
+                <span class="tag">Diffusionの本質</span><span class="tag">モデル構造と制御レイヤー</span>
+                <span class="tag">プロンプト設計概念</span><span class="tag">ノードワークフロー設計</span>
+                <span class="tag">設計と制御の接続</span><span class="tag">ComfyUI導入</span><span class="tag">映像用語の基礎</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="content-item">
+            <div class="item-num">2</div>
+            <div style="width:100%">
+              <div class="item-title">＜2ヶ月目：講義編＞ 実践講義（全100時間 / 全10セクション）</div>
+              <div class="item-desc">実務に即した5つのSTEPで、クライアントワーク・折衝・納品までを体験する実践型カリキュラムです。</div>
+              <div class="accordion">
+
+                <button class="acc-btn" onclick="toggle(this)">【STEP1】基礎：社内動画制作 <span class="arr">▼</span></button>
+                <div class="acc-body">
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP1-1 プレゼン動画制作（10時間）</div>
+                    <div class="tags"><span class="tag">プレゼン動画の基本構造（OP→スライド→ED）</span><span class="tag">要件の読み解き</span><span class="tag">社員アバター生成</span><span class="tag">スライド生成</span><span class="tag">音声生成・リップシンク</span><span class="tag">映像統合と簡易編集</span></div>
+                  </div>
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP1-2 採用インタビュー動画（10時間）</div>
+                    <div class="tags"><span class="tag">インタビュー構造理解</span><span class="tag">マルチアングル生成</span><span class="tag">QA設計</span><span class="tag">Bロール概念理解</span><span class="tag">フェイススワップ活用</span><span class="tag">編集による抑揚設計</span></div>
+                  </div>
+                </div>
+
+                <button class="acc-btn" onclick="toggle(this)">【STEP2】商品イメージ・案件対応力 <span class="arr">▼</span></button>
+                <div class="acc-body">
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP2-1 商品イメージ動画（10時間）</div>
+                    <div class="tags"><span class="tag">ターゲットと出口設計</span><span class="tag">ブランドトンマナ設計</span><span class="tag">BGM生成</span><span class="tag">ストーリーボード作成</span><span class="tag">素材生成</span><span class="tag">リズム編集基礎</span></div>
+                  </div>
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP2-2 覆し対応編（10時間）</div>
+                    <div class="tags"><span class="tag">覆し事例理解</span><span class="tag">クライアント vs 視聴者視点整理</span><span class="tag">再要件定義</span><span class="tag">ブランド再設計</span><span class="tag">再ストーリーボード構築</span><span class="tag">柔軟な再提案</span></div>
+                  </div>
+                </div>
+
+                <button class="acc-btn" onclick="toggle(this)">【STEP3】ローンチ・話題設計 <span class="arr">▼</span></button>
+                <div class="acc-body">
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP3-1 ローンチ動画（10時間）</div>
+                    <div class="tags"><span class="tag">ローンチ構造理解</span><span class="tag">"事件を作る"設計</span><span class="tag">渇きを作る編集</span><span class="tag">マネーショット設計</span><span class="tag">リズムのない素材の再構築</span></div>
+                  </div>
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP3-2 予告編風動画（10時間）</div>
+                    <div class="tags"><span class="tag">ログライン強調</span><span class="tag">キラーカット設計</span><span class="tag">予告編構造理解</span><span class="tag">強い絵の演出</span><span class="tag">誇張と期待値操作</span></div>
+                  </div>
+                </div>
+
+                <button class="acc-btn" onclick="toggle(this)">【STEP4】CI／ビジョン案件 <span class="arr">▼</span></button>
+                <div class="acc-body">
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP4-1 CI動画 折衝編（10時間）</div>
+                    <div class="tags"><span class="tag">抽象要件の言語化</span><span class="tag">資料読解</span><span class="tag">比喩・モチーフ設計</span><span class="tag">ストーリーボード提案</span><span class="tag">シナリオ作成</span><span class="tag">折衝体験</span></div>
+                  </div>
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP4-2 CI動画 伴走編（10時間）</div>
+                    <div class="tags"><span class="tag">制作実行</span><span class="tag">1稿提出</span><span class="tag">グループフィードバック</span><span class="tag">2稿改善</span><span class="tag">納品体験</span></div>
+                  </div>
+                </div>
+
+                <button class="acc-btn" onclick="toggle(this)">【STEP5】製品デモ動画 <span class="arr">▼</span></button>
+                <div class="acc-body">
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP5-1 シナリオ編（10時間）</div>
+                    <div class="tags"><span class="tag">製品デモ構造理解</span><span class="tag">商品理解</span><span class="tag">論理設計</span><span class="tag">シナリオ化</span><span class="tag">提案資料作成</span></div>
+                  </div>
+                  <div class="sub-step">
+                    <div class="sub-title">■ STEP5-2 編集編（10時間）</div>
+                    <div class="tags"><span class="tag">制作実行</span><span class="tag">改稿対応</span><span class="tag">フォーマット準拠編集</span><span class="tag">最終納品</span><span class="tag">講評</span></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </li>
+
+          <li class="content-item">
+            <div class="item-num">3</div>
+            <div>
+              <div class="item-title">＜3ヶ月目＞ グループフィードバック・納品体験</div>
+              <div class="item-desc">実案件に近い環境でのグループフィードバックと、1稿→改稿→最終納品までを一貫して体験できます。</div>
+            </div>
+          </li>
+
+        </ul>
+        <div class="duration"><span>サービス提供期間</span><span>3ヶ月間</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card__title">支払方法</div>
+        <div class="method-label">クレジットカード</div>
+        <div class="brands"><span class="brand">VISA</span><span class="brand">Master</span><span class="brand">AMEX</span><span class="brand">JCB</span></div>
+        <div class="method-label">銀行振込</div>
+      </div>
+
+      <div class="card">
+        <div class="card__title">安全のための取り組み　SSL暗号化</div>
+        <p class="security-text">ご注文者情報はSSL暗号化技術を利用して厳重に送信いたします。ご入力いただいたカード情報は決済代行会社に委託しており、当社では保存されませんのでご安心ください。転売など、当社が不都合と判断した場合はご購入をお断りさせていただくことがございます。予めご了承ください。<br><br>本商品は、必ずしも購入者様の利益や効果を保証したものではございません。</p>
+        <div class="ssl-badge"><span class="check">✔</span><span>Norton<br><small>Secured · Powered by DigiCert</small></span></div>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-head">お支払い内容の確認</div>
+      <div class="sidebar-body">
+        <div class="sum-row"><span>商品名</span><span>AI FILM ACADEMY</span></div>
+        <div class="sum-row"><span>商品価格</span><span>450,000円（税別）</span></div>
+        <div class="total-box">
+          <div><div class="total-label">お支払い金額</div><div class="total-amount">450,000円</div></div>
+          <div style="font-size:11px;color:#888;">税別</div>
+        </div>
+        <hr class="divider">
+        <div class="method-head">お支払い方法の選択</div>
+        <div class="brands" style="justify-content:center;margin-bottom:14px;">
+          <span class="brand">VISA</span><span class="brand">Master</span><span class="brand">AMEX</span><span class="brand">JCB</span>
+        </div>
+        <a href="#" class="btn btn--credit">クレジットカードで申し込む <span class="btn-arrow">›</span></a>
+        <div class="btn-or">または</div>
+        <a href="#" class="btn btn--bank">銀行振込で申し込む <span class="btn-arrow">›</span></a>
+        <p class="sidebar-note">本商品は、必ずしも購入者様の利益や<br>効果を保証したものではございません。</p>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="#">特定商取引法に基づく表記</a>
+  <a href="#">プライバシーポリシー</a>
+  <p style="margin-top:10px;">©2026 AI FILM ACADEMY</p>
+</footer>
+
+<script>
+  function toggle(btn) {
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
